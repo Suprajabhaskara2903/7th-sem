@@ -1,0 +1,390 @@
+---
+title: "R-Intro-Data"
+output:
+  pdf_document: default
+  html_document: default
+date: "2022-09-27"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r}
+x <- c(10.4, 5.6, 3.1, 6.4, 21.7)
+```
+
+```{r}
+x = c(10.4, 5.6, 3.1, 6.4, 21.7)
+print(x)
+```
+
+```{r}
+assign("x", c(10.4, 5.6, 3.1, 6.4, 21.7))
+x
+```
+
+```{r}
+c(10.4, 5.6, 3.1, 6.4, 21.7) -> x
+print(1/x)
+print(x^2 + 2*x -1)
+print(class(x))
+```
+
+```{r}
+y <- c(x,0, x*x)
+y
+```
+
+```{r}
+y <- c(x, 0, x*x)
+print(y)
+print( paste("sum=", sum(y) ))
+sprintf("mean=%f", mean(y))
+
+print( paste("var=", var(y) ))
+print( paste(sort(y) ))
+```
+
+```{r}
+sqrt(-16)
+sqrt(-16 + 0i)
+```
+
+```{r}
+val = 1:10
+print(val)
+seq(-5, 5, by=.2) -> val
+print(val)
+
+ val <- seq(length=48, from=-5, by=.2)
+ print(val)
+```
+
+```{r}
+print(x)
+s5 <- rep(x, times=5)
+print(s5)
+```
+
+```{r}
+print(x)
+s5 <- rep(x, each=5)
+print(s5)
+```
+
+```{r}
+#Logical vectors
+x = 1:15
+temp <- x > 13
+temp
+class(temp)
+```
+
+```{r}
+ z <- c(1:3,NA); ind <- is.na(z)
+ind
+```
+
+```{r}
+ v = 1/0
+v
+v1 = 0/0
+v1
+is.na(v)
+is.na(v1)
+is.nan(v)
+is.nan(v1)
+```
+
+```{r}
+# Character vectors
+s = c('a', 'b', 'c')
+s
+class(s)
+
+s = c("abc", "bcd", "cde")
+s
+class(s)
+```
+
+```{r}
+labs <- paste(c("X","y"), 1:10, sep="")
+labs
+```
+
+```{r}
+#Slicing
+x = 20:1
+x
+x[5:10]
+
+y <- x[-(1:5)]
+y
+
+l = length(x)
+y = x[(l-5):l]
+y
+```
+
+```{r}
+y <- x[ x>9 ]
+y
+
+y <- x[ !x>9 ]
+y
+
+y <- (x^2)[ x>10 & x<15 ]
+y
+```
+
+```{r}
+ c("x","y")[rep(c(1,2,2,1), times=4)]
+```
+
+```{r}
+fruit <- c(5, 10, 1, 20)
+names(fruit) <- c("orange", "banana", "apple", "peach")
+lunch <- fruit[c("apple","orange")]
+lunch
+```
+
+```{r}
+x = c(1, 2, 3, 0, NA, NA)
+x
+x[is.na(x)] <- 0
+x
+```
+
+```{r}
+#mode, length, attributes
+z = 0:2
+mode(z)
+length(z)
+attributes(z)
+
+names(z) = c("a", "b", "c")
+attributes(z)
+
+digits <- as.character(z)
+digits
+class(digits)
+digits <- as.integer(z)
+digits
+class(digits)
+```
+
+```{r}
+#Factors
+
+state <- c("tas", "sa", "qld", "nsw", "nsw", "nt", "wa", "wa",
+"qld", "vic", "nsw", "vic", "qld", "qld", "sa", "tas",
+"sa", "nt", "wa", "vic", "qld", "nsw", "nsw", "wa",
+"sa", "act", "nsw", "vic", "vic", "act")
+
+statef <- factor(state)
+statef
+levels(statef)
+
+ 
+```
+
+```{r}
+ incomes <- c(60, 49, 40, 61, 64, 60, 59, 54, 62, 69, 70, 42, 56,
+61, 61, 61, 58, 51, 48, 65, 49, 49, 41, 48, 52, 46,
+59, 46, 58, 43)
+incomes
+statef
+incmeans <- tapply(incomes, statef,mean)
+incmeans
+```
+
+```{r}
+stdError <- function(x) sqrt(x)/length(x)
+
+
+incster <- tapply(incomes, statef, stdError)
+incster
+```
+
+```{r}
+#Array and matrices
+x1 <- array(1:20, dim=c(4,5))
+x1
+
+i <- array(c(1:3,3:1), dim=c(3,2))
+i
+```
+
+```{r}
+x[i]
+x[i] = "&"
+x
+```
+
+```{r}
+z = array(1:5, dim = c(3, 3, 2))
+z
+```
+
+```{r}
+d <- outer(0:9, 0:9)
+d
+```
+
+```{r}
+d <- outer(0:9, 0:9, "+")
+d
+```
+
+```{r}
+a = array(1:10, dim=c(2, 5))
+a
+ta = t(a)
+ta
+print(a %*% ta)
+print(a * ta)
+```
+
+```{r}
+v1 = array(1:10)
+v1
+
+v2 = array(5:14)
+v2
+
+v1 * v2
+crossprod(v1, v2)
+
+div1 = diag(v1)
+div1
+diag(div1)
+```
+
+```{r}
+#Solve the following system of linear equations using appropriate linear algebra: 
+#2a + 3b + 11c + 5d = 12
+# a + b +5c + 2d  = 1
+#2a + b – 3c + 2d = -3
+#a + b -3c + 4d = -3
+
+A = array(c(2, 1,2,1, 3, 1,1,1, 11, 5, -3, -3, 5, 2, 2, 4), dim=c(4,4))
+A
+b = array(c(12, 1, -3, -3), dim=c(4,1))
+b
+x = solve(A,b)
+x
+A %*% x - b
+
+Ainv = solve(A)
+A %*% Ainv
+```
+
+```{r}
+a = array(1:12, dim=c(3, 4))
+a
+b = array(13:24, dim=c(3, 4))
+b
+cbind(a,b)
+rb =rbind(a,b)
+rb
+
+v = c(rb)
+#v = as.vector(rb)
+v
+```
+
+```{r}
+#DataFrame
+
+emp.data <- data.frame(
+  
+   emp_id = c (1:5), 
+   emp_name = c("Rick","Dan","Michelle","Ryan","Gary"),
+   salary = c(623.3,515.2,611.0,729.0,843.25), 
+   
+   start_date = as.Date(c("2012-01-01", "2013-09-23", "2014-11-15", "2014-05-11",
+      "2015-03-27")),
+   stringsAsFactors = FALSE
+   
+)
+
+emp.data
+str(emp.data)
+
+```
+
+```{r}
+print(summary(emp.data))  
+```
+
+```{r}
+result <- data.frame(emp.data$emp_name, emp.data$salary)
+print(result)
+```
+
+```{r}
+result <- emp.data[2:4,]
+print(result)
+```
+
+```{r}
+result <- emp.data[c(1,3,5),]
+print(result)
+```
+
+```{r}
+result <- emp.data[c(3,5),c(2,4)]
+print(result)
+```
+
+```{r}
+emp.data$dept <- c("IT","Operations","IT","HR","Finance")
+emp.data
+str(emp.data)
+```
+
+```{r}
+write.csv(emp.data,"Employeesss.csv")
+```
+
+```{r}
+dataf=read.csv("Employeesss.csv")
+dataf
+```
+
+```{r}
+stud_data = read.csv("StudentsPerformance_DA.csv")
+stud_data
+mode(stud_data)
+class(stud_data)
+length(stud_data)
+names(stud_data)
+```
+
+```{r}
+cars
+summary(cars)
+boxplot(cars)
+t(cars)
+```
+
+```{r}
+library("xlsx")
+my_data <- read.xlsx(file.choose(), 1)  # read first sheet
+```
+
+```{r}
+library("readxl")
+my_data1 <- read_excel(file.choose(), 1)  # read first sheet
+```
+
+```{r}
+attach("ppgrades.csv")
+```
